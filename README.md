@@ -70,7 +70,7 @@
 
 ### UI
 
-- Tailwind CSS 
+- Tailwind CSS
 
 ### Code Quality
 
@@ -103,3 +103,8 @@ npm run dev
 ```
 docker-compose up
 ```
+
+### Vercel
+
+https://delivery-form-kappa.vercel.app/
+
