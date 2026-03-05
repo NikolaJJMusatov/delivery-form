@@ -1,23 +1,23 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 
-import { OrderFormData, orderSchema } from "@/shared/lib/validation"
+import { OrderFormData, OrderFormInput, orderSchema } from "@/shared/lib/validation"
 import { Modal } from "@/shared/ui"
 
 import { StepConfirm } from "./step-confirm"
 import { StepReceiver } from "./step-receiver"
 import { StepSender } from "./step-sender"
-import { useRouter } from "next/navigation"
 
 export function OrderForm() {
   const router = useRouter()
   const [step, setStep] = useState(0)
   const [error, setError] = useState<string | null>(null)
 
-  const methods = useForm<OrderFormData>({
+  const methods = useForm<OrderFormInput>({
     resolver: zodResolver(orderSchema),
     mode: "onChange",
     defaultValues: {
@@ -27,7 +27,7 @@ export function OrderForm() {
       receiverName: "",
       receiverCity: "",
       cargoType: "regular",
-      weight: 1, // Важно: число, а не строка
+      weight: 1,
       agree: false,
     },
   })
@@ -44,12 +44,13 @@ export function OrderForm() {
     (field) => errors[field as keyof OrderFormData],
   )
 
-  const next = async () => {
+  const next = async (e: React.MouseEvent) => {
+    e.preventDefault()
     const isValid = await methods.trigger(stepFields[step])
     if (isValid) setStep((s) => s + 1)
   }
 
-  const onSubmit = async (data: OrderFormData) => {
+  const onSubmit = async (data: OrderFormInput) => {
     await new Promise((r) => setTimeout(r, 500))
     try {
       const orders = JSON.parse(localStorage.getItem("orders") || "[]")
@@ -62,7 +63,7 @@ export function OrderForm() {
       localStorage.setItem("orders", JSON.stringify([order, ...orders]))
       methods.reset()
       router.push("/orders")
-    } catch (e) {
+    } catch {
       setError("Ошибка сохранения")
     }
   }

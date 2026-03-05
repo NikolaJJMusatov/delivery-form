@@ -3,10 +3,7 @@ import { useFormContext } from "react-hook-form"
 import { FormField } from "@/shared/ui"
 
 export function StepReceiver() {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext()
+  const { register } = useFormContext()
 
   return (
     <div className="space-y-4">

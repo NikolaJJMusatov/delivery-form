@@ -14,11 +14,9 @@ export const orderSchema = z
     receiverName: z.string().min(2, "Укажите получателя"),
     receiverCity: z.string().min(2, "Укажите город"),
     cargoType: z.enum(["documents", "fragile", "regular"]),
+
     weight: z.coerce
-      .number({
-        error: (issue) =>
-          issue.code === "invalid_type" ? "Введите число" : "Некорректное значение",
-      })
+      .number({ message: "Введите число" })
       .min(0.1, "Минимум 0.1 кг")
       .max(30, "Максимум 30 кг"),
 
@@ -29,4 +27,5 @@ export const orderSchema = z
     path: ["receiverCity"],
   })
 
-export type OrderFormData = z.infer<typeof orderSchema>
+export type OrderFormInput = z.input<typeof orderSchema>
+export type OrderFormData = z.output<typeof orderSchema>

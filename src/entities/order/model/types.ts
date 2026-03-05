@@ -16,4 +16,6 @@ export type Order = {
   createdAt: string
 
   status: "created"
+
+  agree: boolean
 }

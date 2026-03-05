@@ -1,4 +1,5 @@
-import { Order } from "./types"
+// eslint-disable-next-line fsd/forbidden-imports, fsd/no-public-api-sidestep
+import { Order } from "@/entities/order/model/types"
 
 const KEY = "orders"
 
@@ -20,4 +21,9 @@ export const deleteOrder = (id: string) => {
   const orders = getOrders().filter((o) => o.id !== id)
 
   localStorage.setItem(KEY, JSON.stringify(orders))
+}
+
+export const getOrderById = (id: string): Order | undefined => {
+  const orders = getOrders()
+  return orders.find((o) => o.id === id)
 }

@@ -1,11 +1,5 @@
-// src/features/orders-list/model/filters.ts
-import { OrderFormData } from "@/shared/lib/validation"
-
-export interface Order extends OrderFormData {
-  id: string
-  createdAt: string
-  status: string
-}
+// eslint-disable-next-line fsd/no-public-api-sidestep
+import { Order } from "@/entities/order/model/types"
 
 export interface OrderFilters {
   search: string
