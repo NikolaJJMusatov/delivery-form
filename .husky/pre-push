@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+echo "🛡️  Проверка зависимостей перед пушем..."
+npm audit --audit-level=high > /dev/null
+if [ $? -ne 0 ]; then
+  echo "❌ Уязвимости найдены! Запусти 'npm audit' и исправь их."
+  exit 1
+fi
